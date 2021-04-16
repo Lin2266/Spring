@@ -1,0 +1,40 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM 
+"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+   <session-factory>
+   	
+<!-- 		該屬性使Hibernate為所選數據庫生成適當的SQL。 -->
+<!-- <property name="hibernate.dialect">org.hibernate.dialect.DerbyTenSevenDialect</property> -->
+      <property name = "hibernate.dialect">
+         org.hibernate.dialect.MySQLDialect
+      </property>
+      
+<!--       JDBC驅動程序類。 -->
+      <property name = "hibernate.connection.driver_class">
+         com.mysql.jdbc.Driver
+      </property>
+      
+      <!-- Assume test is the database name -->
+<!--       數據庫實例的JDBC URL。 -->
+<!-- <property name="hibernate.connection.url">jdbc:derby://localhost:1527/testdb</property> -->
+      <property name = "hibernate.connection.url">
+         jdbc:mysql://localhost/myDB
+      </property>
+      
+<!--       數據庫用戶名。 -->
+      <property name = "hibernate.connection.username">
+         root
+      </property>
+      
+<!--       數據庫密碼。 -->
+      <property name = "hibernate.connection.password">
+         123456
+      </property>
+      
+      <!-- List of XML mapping files -->
+      
+      <mapping resource = "Employee.hbm.xml"/>
+      
+   </session-factory>
+</hibernate-configuration>

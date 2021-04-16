@@ -1,0 +1,296 @@
+本範例資料庫有用Derby跟MySQL
+JDBC	java資料庫連接
+ORM		物件關聯對映
+RDBMS	關聯資料庫管理系統
+JPA		java持久性API
+POJO	普通java物件
+
+JDBC的優點					JDBC的缺點
+---------------------------------------------------------
+乾淨簡單的SQL處理			如果用於大型項目則很複雜
+
+大數據性能好				大量的編程開銷
+
+非常適合小型應用			沒有封裝
+
+簡單的語法，易於學習		難以實施的MVC概念
+
+
+							查詢是特定於DBMS的
+
+---------------------------------------------------------
+
+
+為什麼要使用對象關係映射（ORM）？
+當我們使用面向對象的系統時，對像模型和關係數據庫之間會出現不匹配的情況。
+RDBMS以表格格式表示數據，而面向對象的語言（例如Java或C＃）則將其表示為對象的互連圖。
+
+第一個問題，如果我們需要在開發了幾頁或應用程序之後修改數據庫的設計，該怎麼辦？其次，
+在關係數據庫中加載和存儲對象使我們面臨以下五個不匹配問題：
+
+
+序號	不匹配和說明
+----------------------------------------------------------------------------------
+1		Granularity(粒度)
+		有時您將擁有一個對像模型，該對像模型具有比數據庫中對應表數量更多的類。
+
+2		Inheritance(遺產)
+		RDBMS沒有定義類似於繼承的任何東西，繼承是面向對象編程語言中的自然範例。
+
+3		Identity(身份)
+		RDBMS確切地定義了“相同”的一個概念：主鍵。但是，Java同時定義了對象身份
+		（a == b）和對象相等性（a.equals（b））。
+
+4		Associations(社團協會)
+		面向對象的語言使用對象引用表示關聯，而RDBMS則將關聯表示為外鍵列。
+
+5		Navigation(導航)
+		在Java和RDBMS中訪問對象的方式根本不同。
+----------------------------------------------------------------------------------
+ORM	是處理所有上述阻抗失配的溶液。
+ORM	是用於將定向關係數據庫和對象之間的數據的編程語言，例如Java，C＃等一種編程技術。
+
+與普通JDBC相比，ORM系統具有以下優點-
+---------------------------------------------------------------------------------
+序號	好處
+1		讓我們的業務代碼訪問對象而不是數據庫表。
+2		從OO邏輯隱藏SQL查詢的詳細信息。
+3		基於JDBC的“內幕”。
+4		無需處理數據庫實現。
+5		基於業務概念而不是數據庫結構的實體。
+6		事務管理和自動密鑰生成。
+7		快速開發應用程序。
+---------------------------------------------------------------------------------
+
+ORM解決方案由以下四個實體組成-
+---------------------------------------------------------------------------------
+序號	解決方案
+1		在持久性類的對像上執行基本CRUD操作的API。
+2		用於指定引用類和類屬性的查詢的語言或API。
+3		用於指定映射元數據的可配置工具。
+4		與事務對象進行交互以執行臟檢查，惰性關聯獲取和其他優化功能的技術。
+---------------------------------------------------------------------------------
+
+Java ORM框架
+Java中有幾個持久性框架和ORM選項。持久框架是一種ORM服務，用於將對象存儲和檢索到關係數據庫中。
+
+Enterprise JavaBeans Entity Beans
+Java Data Objects
+Castor
+TopLink
+Spring DAO
+Hibernate		(休眠)
+And many more
+-------------------------------------------------------------------------------------
+Hibernate 優勢:
+Hibernate負責使用XML文件將Java類映射到數據庫表，而無需編寫任何代碼。
+
+提供簡單的API，用於直接在數據庫中存儲和檢索Java對象。
+
+如果數據庫或任何表中有更改，則僅需要更改XML文件屬性。
+
+抽像出不熟悉的SQL類型，並提供一種解決熟悉的Java對象的方法。
+
+Hibernate不需要應用程序服務器即可運行。
+
+操作數據庫對象的複雜關聯。
+
+通過智能訪存策略最大程度地減少對數據庫的訪問。
+
+提供簡單的數據查詢。
+------------------------------------------------------------------------------------
+Hibernate使用各種現有的Java API，例如JDBC，Java Transaction API（JTA）和Java命名
+與目錄接口（JNDI）。JDBC提供了關係數據庫共有功能的基本抽象級，允許Hibernate支持
+幾乎所有具有JDBC驅動程序的數據庫。JNDI和JTA允許Hibernate與J2EE應用服務器集成。
+------------------------------------------------------------------------------------
+配置對象
+Configuration對像是您在任何Hibernate應用程序中創建的第一個Hibernate對象。通常在
+應用程序初始化期間僅創建一次。它表示Hibernate所需的配置或屬性文件。
+
+配置對象提供了兩個關鍵組件-
+數據庫連接-通過Hibernate支持的一個或多個配置文件來處理。這些文件是hibernate.properties
+和hibernate.cfg.xml。
+
+類映射設置-該組件創建Java類和數據庫表之間的連接。
+
+SessionFactory對象:
+配置對像用於創建SessionFactory對象，然後使用提供的配置文件為應用程序配置Hibernate，
+並允許實例化Session對象。SessionFactory是線程安全的對象，並由應用程序的所有線程使用。
+
+SessionFactory是一個重量級對象。它通常是在應用程序啟動期間創建的，並保留以備後用。
+使用單獨的配置文件，每個數據庫將需要一個SessionFactory對象。因此，如果使用多個數據庫，
+則必須創建多個SessionFactory對象。
+
+會話對象:
+會話用於獲得與數據庫的物理連接。Session對像是輕量級的，旨在在每次需要與數據庫進行交互
+時實例化。持久對象通過Session對象保存和檢索。
+會話對像不應長時間保持打開狀態，因為它們通常不是線程安全的，因此應根據需要創建和銷毀
+它們。
+
+交易對象:
+事務表示數據庫的工作單元，並且大多數RDBMS支持事務功能。Hibernate中的事務由基礎事務管理
+器和事務處理（來自JDBC或JTA）。
+這是一個可選對象，Hibernate應用程序可以選擇不使用此接口，而是以自己的應用程序代碼管理事務。
+
+查詢對象:
+查詢對象使用SQL或休眠查詢語言（HQL）字符串從數據庫中檢索數據並創建對象。Query實例用於
+綁定查詢參數，限制查詢返回的結果數，最後執行查詢。
+
+條件對象:
+條件對像用於創建和執行面向對象的條件查詢以檢索對象。
+-----------------------------------------------------------------------------------------
+Hibernate需要事先知道-在哪裡可以找到定義Java類與數據庫表的關係的映射信息。Hibernate還需要
+一組與數據庫和其他相關參數有關的配置設置。通常，所有這些信息都以標準Java屬性文件
+hibernate.properties或XML文件hibernate.cfg.xml的形式提供。
+
+在示例中，我將考慮使用XML格式的文件hibernate.cfg.xml來指定所需的Hibernate屬性。
+大多數屬性採用其默認值，除非確實需要，否則不需要在屬性文件中指定它們。該文件保存在應用程
+序的類路徑的根目錄中。
+
+以下是重要屬性的列表，您將需要在獨立情況下為數據庫進行配置-
+--------------------------------------------------------------
+序號	屬性和說明
+1		hibernate.dialect
+		該屬性使Hibernate為所選數據庫生成適當的SQL。
+
+2		hibernate.connection.driver_class
+		JDBC驅動程序類。
+
+3		hibernate.connection.url
+		數據庫實例的JDBC URL。
+
+4		hibernate.connection.username
+		數據庫用戶名。
+
+5		hibernate.connection.password
+		數據庫密碼。
+
+6		hibernate.connection.pool_size
+		限制在Hibernate數據庫連接池中等待的連接數。
+
+7		hibernate.connection.autocommit
+		允許將自動提交模式用於JDBC連接。
+-----------------------------------------------------------------
+
+如果您將數據庫與應用程序服務器和JNDI一起使用，則必須配置以下屬性-
+------------------------------------------------------------------
+序號	屬性和說明
+1		hibernate.connection.datasource
+		在應用程序服務器上下文中定義的JNDI名稱，該名稱用於該應用程序。
+
+2		hibernate.jndi.class
+		JNDI的InitialContext類。
+
+3		hibernate.jndi。<JNDIpropertyname>
+		將您喜歡的任何JNDI屬性傳遞給JNDI InitialContext。
+
+4		hibernate.jndi.url
+		提供JNDI的URL。
+
+5		hibernate.connection.username
+		數據庫用戶名。
+
+6		hibernate.connection.password
+		數據庫密碼。
+----------------------------------------------------------------------------------------
+
+Session Interface Methods
+----------------------------------------------------------------------------------------
+序號	會話方法和描述
+1		ransaction beginTransaction()
+		開始一個工作單元並返回關聯的Transaction對象。
+
+2		void cancelQuery（）
+		取消當前查詢的執行。
+
+3		void clear()
+		完全清除會話。
+
+4		Connection close()
+		通過釋放JDBC連接並清理結束會話。
+
+5		Criteria createCriteria(Class persistentClass)
+		為給定的實體類或實體類的超類創建一個新的Criteria實例。
+
+6		Criteria createCriteria(String entityName)
+		為給定的實體名稱創建一個新的Criteria實例。
+
+7		Serializable getIdentifier(Object object)
+		返回與此會話相關聯的給定實體的標識符值。
+
+8		Query createFilter(Object collection, String queryString)
+		為給定的集合和過濾器字符串創建一個Query的新實例。
+
+9		Query createQuery(String queryString)
+		為給定的HQL查詢字符串創建Query的新實例。
+
+10		SQLQuery createSQLQuery(String queryString)
+		為給定的SQL查詢字符串創建一個新的SQLQuery實例。
+
+11		void delete(Object object)
+		從數據存儲中刪除持久性實例。
+
+12		void delete(String entityName, Object object)
+		從數據存儲中刪除持久性實例。
+
+13		Session get(String entityName, Serializable id)
+		返回具有給定標識符的給定命名實體的持久實例；如果不存在這樣的持久實例，則返回null。
+
+14		SessionFactory getSessionFactory()
+		獲取創建此會話的會話工廠。
+
+15		void refresh(Object object)
+		從底層數據庫重新讀取給定實例的狀態。
+
+16		Transaction getTransaction()
+		獲取與此會話關聯的交易實例。
+
+17		boolean isConnected()
+		檢查會話當前是否連接。
+
+18		boolean isDirty()
+		此會話是否包含必須與數據庫同步的任何更改？
+
+19		boolean isOpen()
+		檢查會話是否仍然打開。
+
+20		Serializable save(Object object)
+		堅持給定的瞬態實例，首先分配一個生成的標識符。
+
+21		void saveOrUpdate(Object object)
+		給定實例的save（Object）或update（Object）。
+
+22		void update(Object object)
+		使用給定的分離實例的標識符更新持久實例。
+
+23		void update(String entityName, Object object)
+		使用給定的分離實例的標識符更新持久實例。
+----------------------------------------------------------------------------------------
+Hibernate的整個概念是從Java類屬性中獲取值並將其持久化到數據庫表中。映射文檔可幫助
+Hibernate確定如何從類中提取值以及如何將它們與表和關聯字段進行映射。
+
+對像或實例將存儲在數據庫表中的Java類在Hibernate中稱為持久性類。如果這些類遵循一些簡單規則
+（也稱為普通舊Java對象（POJO）編程模型），則Hibernate效果最佳。
+
+持久性類有以下主要規則，但是，這些規則都不是硬性要求-
+
+所有將被持久化的Java類都需要一個默認的構造函數。
+
+所有類都應包含一個ID，以便輕鬆識別Hibernate和數據庫中的對象。此屬性映射到數據庫表的主鍵列。
+
+應該保留的所有屬性都應聲明為私有，並具有以JavaBean樣式定義的getXXX和setXXX方法。
+
+代理的Hibernate的主要功能取決於持久類是非最終類，還是聲明所有公共方法的接口的實現。
+
+沒有擴展或實現EJB框架所需的某些專門類和接口的所有類。
+
+POJO名稱用於強調給定對像是普通Java對象，而不是特殊對象，尤其不是Enterprise JavaBean。
+--------------------------------------------------------------------------------------
+準備Hibernate映射文檔時，會發現將Java數據類型映射為RDBMS數據類型。
+映射文件中聲明和使用的type不是Java數據type。它們也不是SQL數據庫type。
+這些類型稱為Hibernate映射type，可以將其從Java轉換為SQL數據type，反之亦然。
+<property name = "firstName" column = "first_name" type = "string"/>
+
+映射文檔保存為格式為<classname> .hbm.xml的文件。我們將映射文檔保存在文件Employee.hbm.xml中。
+
+

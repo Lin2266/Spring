@@ -1,0 +1,32 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<!-- 映射文檔是一個以<hibernate-mapping>作為根元素的XML文檔 -->
+<hibernate-mapping>
+<!--所述<class>元件用於從一個Java類的數據庫表定義特定的映射。Java類名稱是使用
+class元素的name屬性指定的，而數據庫表名稱是使用table屬性指定的。-->
+   <class name = "course.hibernate.Employee" table = "EMPLOYEE">
+<!--       所述的<meta>元素是可選的元件，並且可以被用來創建類描述。 -->
+      <meta attribute = "class-description">
+         This class contains the employee detail. 
+      </meta>
+<!--所述<ID>元素映射類的數據庫表中的主鍵的唯一ID屬性。id元素的name屬性引用該類中的屬性，
+而column屬性引用該數據庫表中的列。該類型屬性保存Hibernate映射類型，這種映射類型將轉
+換從Java到SQL數據類型。-->      
+      <id name = "id" type = "int" column = "id">
+<!--id元素中的<generator>元素用於自動生成主鍵值。將generator元素的class屬性設置為native，
+以使休眠模式根據基礎數據庫的功能來選擇身份，序列或hilo算法以創建主鍵。-->       
+         <generator class="native"/>
+      </id>
+<!--所述<property>元素用於Java類屬性映射到數據庫中的表中的列。元素的name屬性引用類中
+的屬性，而column屬性引用數據庫表中的列。該類型屬性保存Hibernate映射類型，這種映射類
+型將轉換從Java到SQL數據類型。
+-->      
+      <property name = "firstName" column = "first_name" type = "string"/>
+      <property name = "lastName" column = "last_name" type = "string"/>
+      <property name = "salary" column = "salary" type = "int"/>
+      
+   </class>
+</hibernate-mapping>
