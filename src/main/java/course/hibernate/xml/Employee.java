@@ -1,4 +1,4 @@
-package course.hibernate;
+package course.hibernate.xml;
 
 public class Employee {
 	

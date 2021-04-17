@@ -2,9 +2,61 @@
 JDBC	java資料庫連接
 ORM		物件關聯對映
 RDBMS	關聯資料庫管理系統
-JPA		java持久性API
+JPA		java持久性API(Java Persistence API)
 POJO	普通java物件
 
+用到的jar檔:
+<dependency>
+   		<groupId>org.hibernate</groupId>
+    	<artifactId>hibernate-core</artifactId>
+    	<version>3.6.4.Final</version>
+	</dependency>
+	<dependency>
+    	<groupId>dom4j</groupId>
+    	<artifactId>dom4j</artifactId>
+    	<version>1.6.1</version>
+	</dependency>
+	<dependency>
+    	<groupId>xalan</groupId>
+   	 	<artifactId>xalan</artifactId>
+    	<version>2.7.2</version>
+	</dependency>
+	<dependency>
+    	<groupId>xerces</groupId>
+    	<artifactId>xerces</artifactId>
+    	<version>2.4.0</version>
+	</dependency>
+	<dependency>
+   	 	<groupId>cglib</groupId>
+    	<artifactId>cglib</artifactId>
+    	<version>3.3.0</version>
+	</dependency>
+	<dependency>
+    	<groupId>log4j</groupId>
+    	<artifactId>log4j</artifactId>
+    	<version>1.2.17</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.slf4j</groupId>
+    	<artifactId>slf4j-api</artifactId>
+    	<version>2.0.0-alpha1</version>
+	</dependency>
+	<dependency>
+    	<groupId>mysql</groupId>
+    	<artifactId>mysql-connector-java</artifactId>
+    	<version>5.1.47</version>
+	</dependency>
+	<dependency>
+    	<groupId>javassist</groupId>
+   		<artifactId>javassist</artifactId>
+    	<version>3.12.1.GA</version>
+	</dependency>
+	<dependency>
+    	<groupId>org.apache.derby</groupId>
+    	<artifactId>derby</artifactId>
+    	<version>10.14.2.0</version>
+    </dependency>
+    	
 JDBC的優點					JDBC的缺點
 ---------------------------------------------------------
 乾淨簡單的SQL處理			如果用於大型項目則很複雜
@@ -147,6 +199,7 @@ hibernate.properties或XML文件hibernate.cfg.xml的形式提供。
 大多數屬性採用其默認值，除非確實需要，否則不需要在屬性文件中指定它們。該文件保存在應用程
 序的類路徑的根目錄中。
 
+Hibernate Properties
 以下是重要屬性的列表，您將需要在獨立情況下為數據庫進行配置-
 --------------------------------------------------------------
 序號	屬性和說明
@@ -197,7 +250,7 @@ hibernate.properties或XML文件hibernate.cfg.xml的形式提供。
 Session Interface Methods
 ----------------------------------------------------------------------------------------
 序號	會話方法和描述
-1		ransaction beginTransaction()
+1		Transaction beginTransaction()
 		開始一個工作單元並返回關聯的Transaction對象。
 
 2		void cancelQuery（）
@@ -285,12 +338,86 @@ Hibernate確定如何從類中提取值以及如何將它們與表和關聯字�
 沒有擴展或實現EJB框架所需的某些專門類和接口的所有類。
 
 POJO名稱用於強調給定對像是普通Java對象，而不是特殊對象，尤其不是Enterprise JavaBean。
---------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
 準備Hibernate映射文檔時，會發現將Java數據類型映射為RDBMS數據類型。
 映射文件中聲明和使用的type不是Java數據type。它們也不是SQL數據庫type。
 這些類型稱為Hibernate映射type，可以將其從Java轉換為SQL數據type，反之亦然。
 <property name = "firstName" column = "first_name" type = "string"/>
 
 映射文檔保存為格式為<classname> .hbm.xml的文件。我們將映射文檔保存在文件Employee.hbm.xml中。
+-----------------------------------------------------------------------------------------------------------------------------
+編譯與執行
+1.這是編譯和運行上述應用程序的步驟。在繼續進行編譯和執行之前，請確保已正確設置了PATH和CLASSPATH。
+2.按照配置一章中的說明創建hibernate.cfg.xml配置文件。
+3.如上所示，創建Employee.hbm.xml映射文件。
+4.如上所示創建Employee.java源文件並進行編譯。
+5.如上所示創建ManageEmployee.java源文件並進行編譯。
+6.執行ManageEmployee二進製文件以運行程序。
+------------------------------------------------------------------------------------------------------------------------------
+hibernate的最基本的O / R映射，但是有三個最重要的映射主題，我們需要詳細學習。
 
+Mapping of collections,	集合的映射
+Mapping of associations between entity classes,	實體類之間的關聯映射
+Component Mappings.	組件映射
 
+集合映射
+如果實體或類具有特定變量的值集合，那麼我們可以使用Java中可用的任何一個集合接口來映射這些值。
+Hibernate可以持久化java.util.Map，java.util.Set，java.util.SortedMap，java.util.SortedSet，java.util.List
+和所有持久性實體或值數組的實例。
+-------------------------------------------------------------------------------------------------------------------------------
+序號	集合類型和映射說明
+1		java.util.Set
+		這是通過<set>元素映射的，並使用java.util.HashSet進行了初始化。
+
+2		java.util.SortedSet
+		這與<set>元素映射，並由java.util.TreeSet初始化。該類型的屬性可以被設置為一個比較器或自然順序。
+
+3		java.util.List
+		這與<list>元素映射，並由java.util.ArrayList初始化。
+
+4		java.util.Collection
+		這用<bag>或<ibag>元素映射，並用java.util.ArrayList初始化。
+
+5		java.util.Map
+		這是通過<map>元素映射的，並使用java.util.HashMap進行了初始化。
+
+6		java.util.SortedMap
+		這用<map>元素映射，並用java.util.TreeMap初始化。該類型的屬性可以被設置為一個比較器或自然順序。
+--------------------------------------------------------------------------------------------------------------------------------
+
+Hibernate支持數組，其中<primitive-array>用於Java基本值類型，而<array>用於其他所有內容。但是，它們很少使用，因此在本教程中
+我將不再討論它們。
+如果要映射Hibernate不直接支持的用戶定義的集合接口，則需要告訴Hibernate您的自定義集合的語義，這不是很容易，不建議使用。
+
+關聯映射
+實體類之間的關聯以及表之間的關係的映射是ORM的靈魂。以下是表示對象之間關係基數的四種方式。關聯映射可以是單向的，也可以是雙向的。
+----------------------------------------------------------------------------------------------------------------------------------
+序號	映射類型和描述
+1		Many-to-One多對一
+		使用Hibernate映射多對一關係
+
+2		One-to-One一對一
+		使用Hibernate映射一對一關係
+
+3		One-to-Many一對多
+		使用Hibernate映射一對多關係
+
+4		Many-to-Many多對多
+		使用Hibernate映射多對多關係
+----------------------------------------------------------------------------------------------------------------------------------
+
+組件映射
+實體類很可能可以引用另一個類作為成員變量。如果所引用的類沒有自己的生命週期，並且完全取決於擁有實體類的生命週期，則因此將所引用的
+類稱為Component類。
+組件集合的映射也可以以類似的方式進行，就像常規的集合的映射具有較小的配置差異一樣。我們將通過示例詳細了解這兩個映射。
+------------------------------------------------------------------------------------------------------------------------------------
+序號	映射類型和描述
+1		Component Mappings組件映射
+		映射具有引用另一個類作為成員變量的類。
+------------------------------------------------------------------------------------------------------------------------------------
+到目前為止，您已經了解了Hibernate如何使用XML映射文件將數據從POJO轉換為數據庫表，反之亦然。Hibernate批註是無需使用XML文件即可定義
+映射的最新方法。除了XML映射元數據外，也可以使用註釋來代替XML映射元數據。
+休眠註釋是為對象和關係表映射提供元數據的強大方法。所有元數據與代碼一起被合併到POJO Java文件中，這有助於用戶在開發過程中同時理解
+表結構和POJO。
+
+如果要使您的應用程序可移植到其他符合EJB 3的ORM應用程序中，則必須使用批註來表示映射信息，但是如果您想要更大的靈活性，則應該使用基於XML的映射。

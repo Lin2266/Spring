@@ -1,0 +1,41 @@
+Hibernate Annotation的環境設置
+首先，您必須確保使用的是JDK 5.0，否則需要將JDK升級到JDK 5.0，以利用對註釋的本機支持。
+其次，您將需要安裝Hibernate 3.x批註分發包，該包可從sourceforge獲得：（下載Hibernate Annotation）並複制
+hibernate-annotations.jar，lib / hibernate-comons-annotations.jar和lib / ejb3-persistence。從
+Hibernate Annotations發行版到您的CLASSPATH的jar。(maven的hibernate-core包就有了)
+
+帶註釋的類示例
+正如我上面提到的，在使用Hibernate Annotation時，所有元數據與代碼一起被合併到POJO Java文件中，這有助於用
+戶在開發過程中同時理解表結構和POJO。
+-----------------------------------------------------------------------------------------------------------------------------
+Hibernate檢測到@Id批註位於字段上，並假定它應在運行時直接通過字段訪問對象的屬性。如果將@Id註釋放在getId（）方法上，
+則默認情況下將允許通過getter和setter方法訪問屬性。因此，遵循選擇的策略，所有其他註釋也將放置在字段或getter方法上。
+
+@Entity Annotation
+EJB 3標準註釋包含在javax.persistence包中，因此我們首先導入此包。其次，我們對Employee類使用了@Entity annotation，
+該註解將此類標記為實體Bean，因此它必須具有無參數構造函數，該構造函數至少在受保護範圍內可見。
+
+@Table Annotation
+@Table批註允許您指定用於將實體保留在數據庫中的表的詳細信息。
+
+@Table批註提供了四個屬性，使您可以覆蓋表的名稱，目錄和架構，並對錶中的列施加唯一的約束。現在，我們僅使用表名，即EMPLOYEE。
+
+@Id and @GeneratedValue Annotations
+每個實體bean將具有一個主鍵，您可以在類上使用@Id annotation對其進行註釋。主鍵可以是單個字段，也可以是多個字段的組合，
+具體取決於您的表結構。
+
+默認情況下，@Id annotation將自動確定要使用的最合適的主鍵生成策略，但是您可以通過應用@GeneratedValue annotation來覆蓋此策略，
+該批註採用兩個參數策略和生成器，在此不再贅述，因此讓我們只使用默認的密鑰生成策略。讓Hibernate確定使用哪種生成器類型，
+可以使您的代碼在不同數據庫之間可移植。
+
+@Column Annotation
+@Column批註用於指定字段或屬性將映射到的列的詳細信息。您可以將列註釋與以下最常用的屬性一起使用-
+
+name		屬性允許顯式指定列的名稱。
+
+length		屬性允許用於映射值的列的大小，特別是對於String值。
+
+nullable	屬性允許在生成架構時將列標記為NOT NULL。
+
+unique		屬性允許將該列標記為僅包含唯一值。
+---------------------------------------------------------------------------------------------------------------------------

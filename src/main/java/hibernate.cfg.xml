@@ -3,38 +3,35 @@
 "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
    <session-factory>
-   	
+   			
+<!--    	MySQL database -->
 <!-- 		該屬性使Hibernate為所選數據庫生成適當的SQL。 -->
-<!-- <property name="hibernate.dialect">org.hibernate.dialect.DerbyTenSevenDialect</property> -->
-      <property name = "hibernate.dialect">
-         org.hibernate.dialect.MySQLDialect
-      </property>
+<!--       <property name = "hibernate.dialect">org.hibernate.dialect.MySQLDialect</property> -->
       
 <!--       JDBC驅動程序類。 -->
-      <property name = "hibernate.connection.driver_class">
-         com.mysql.jdbc.Driver
-      </property>
-      
+<!--       <property name = "hibernate.connection.driver_class">com.mysql.jdbc.Driver</property> -->      
       <!-- Assume test is the database name -->
 <!--       數據庫實例的JDBC URL。 -->
-<!-- <property name="hibernate.connection.url">jdbc:derby://localhost:1527/testdb</property> -->
-      <property name = "hibernate.connection.url">
-         jdbc:mysql://localhost/myDB
-      </property>
-      
+<!--       <property name = "hibernate.connection.url">jdbc:mysql://localhost/mydb?autoReconnect=true&amp;useSSL=false</property> -->    
 <!--       數據庫用戶名。 -->
-      <property name = "hibernate.connection.username">
-         root
-      </property>
-      
+<!-- 	   <property name = "hibernate.connection.password">root</property>      -->      
 <!--       數據庫密碼。 -->
-      <property name = "hibernate.connection.password">
-         123456
-      </property>
+<!--       <property name = "hibernate.connection.password">123456</property> -->
       
-      <!-- List of XML mapping files -->
       
-      <mapping resource = "Employee.hbm.xml"/>
+		<!-- derby database,ClientDriver網頁伺服器，EmbeddedDriver嵌入式 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.DerbyDialect</property>
+		<property name="hibernate.connection.driver_class">org.apache.derby.jdbc.EmbeddedDriver</property>
+		<property name="hibernate.connection.url">jdbc:derby:myDB;create=true</property>		
+		<property name = "hibernate.connection.username">root</property>
+		<property name = "hibernate.connection.password">root</property> 
+		<!-- Creates it only if it doesn't exist 只在不存在時建立-->
+		<property name="hibernate.hbm2ddl.auto">create</property>
+		<!-- import initial data to Database when it created 創建數據庫時將初始數據導入數據庫 -->
+		<property name="hibernate.hbm2ddl.import_files">SQL.employee.sql</property>
+		
+		<!-- List of XML mapping files -->    
+      <mapping resource = "course/hibernate/xml/Employee.hbm.xml"/>
       
    </session-factory>
 </hibernate-configuration>

@@ -1,0 +1,1 @@
+select * from ACG_Character.EMPLOYEE

@@ -7,7 +7,7 @@
 <hibernate-mapping>
 <!--所述<class>元件用於從一個Java類的數據庫表定義特定的映射。Java類名稱是使用
 class元素的name屬性指定的，而數據庫表名稱是使用table屬性指定的。-->
-   <class name = "course.hibernate.Employee" table = "EMPLOYEE">
+   <class name = "course.hibernate.xml.Employee" table = "EMPLOYEE">
 <!--       所述的<meta>元素是可選的元件，並且可以被用來創建類描述。 -->
       <meta attribute = "class-description">
          This class contains the employee detail. 

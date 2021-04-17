@@ -1,0 +1,20 @@
+DB Warning on startup: Establishing SSL connection without server's identity verification is not recommended.
+useSSL=false
+jdbc:mysql://localhost/mydb?autoReconnect=true&amp;useSSL=false
+
+Employee.hbm.xml或hibernate.cfg.xml 檔案找不到時:
+Employee.hbm.xml跟hibernate.cfg.xml要放在classes裡面，maven要設定把xml檔包到classes裡面，hibernate.cfg.xml一定要放classes底下(
+src/main/java/hibernate.cfg.xml就會包到classes底下)，Employee.hbm.xml放classes底下哪層都沒關係，但hibernate.cfg.xml裡的
+<mapping resource = "course/hibernate/Employee.hbm.xml"/>路徑要寫對。
+
+<build>
+    <sourceDirectory>src/main/java</sourceDirectory>  
+    <resources>
+        <resource>
+            <directory>src/main/java</directory>
+            <includes>
+                <include>**/*.xml</include>
+            </includes>
+        </resource>
+    </resources>
+  </build>
