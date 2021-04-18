@@ -1,6 +1,7 @@
 DB Warning on startup: Establishing SSL connection without server's identity verification is not recommended.
 useSSL=false
 jdbc:mysql://localhost/mydb?autoReconnect=true&amp;useSSL=false
+-----------------------------------------------------------------------------------------------------------------------------------
 
 Employee.hbm.xml或hibernate.cfg.xml 檔案找不到時:
 Employee.hbm.xml跟hibernate.cfg.xml要放在classes裡面，maven要設定把xml檔包到classes裡面，hibernate.cfg.xml一定要放classes底下(
@@ -18,3 +19,26 @@ src/main/java/hibernate.cfg.xml就會包到classes底下)，Employee.hbm.xml放c
         </resource>
     </resources>
   </build>
+------------------------------------------------------------------------------------------------------------------------------------  
+ERROR XSDB6: Another instance of Derby may have already booted the database F:\JAVA_C\eclipse-jee-2018-09-win32-x86_64\project\Spring\mydb.
+當ManageEmployee.java專案裡的Derby databasses測試時，Data Source Explorer的Connection必需關閉，不然會顯示已有啟動，顯示錯誤。  
+----------------------------------------------------------------------------------------------------------------------------------
+當使用這個url時<property name="hibernate.connection.url">jdbc:derby:D:\\Database\\myDB;create=true</property>出現的錯誤:
+ERROR XJ040: Failed to start database 'D:\Database\myDB' with class loader sun.misc.Launcher$AppClassLoader@73d16e93, see the next exception for details.
+
+資料庫損毀，把myDB直接刪用，
+hibernate.cfg.xml裡的
+<property name="hibernate.hbm2ddl.auto">create</property>
+<property name="hibernate.hbm2ddl.import_files">SQL.employee.sql</property>
+在重新建立一次資料庫跟資料表，ManageEmployee.java在執行一次就可以了，以上兩個設定內容記得關閉，不關閉每次執行會一直重新建立資料表
+-----------------------------------------------------------------------------------------------------------------------------------
+在MySQL登录时出现Access denied for user ‘root‘@‘localhost‘ (using password: YES) 拒绝访问
+正確設定
+<property name = "hibernate.connection.username">root</property>
+<property name = "hibernate.connection.password">123456</property>
+
+錯誤設定
+<property name = "hibernate.connection.password">root</property>
+<property name = "hibernate.connection.password">123456</property>
+
+2設定標籤的屬性name的值設一樣就會有問題

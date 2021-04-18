@@ -3,8 +3,13 @@ package course.hibernate.annotation;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Parameter;
+import org.hibernate.id.enhanced.OptimizerFactory.HiLoOptimizer;
 /*@Entity指定當前類是持久化實體類，不能省略，將此類標記為實體Bean，因此它必須具有無參數構造函數，
   該構造函數至少在受保護範圍內可見。*/
 @Entity	

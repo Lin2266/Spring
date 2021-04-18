@@ -1,1 +1,3 @@
-select * from ACG_Character.EMPLOYEE
+select * from root.EMPLOYEE
+
+delete from root.EMPLOYEE

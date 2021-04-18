@@ -28,8 +28,8 @@ public class ManageEmployee {
 		Integer empID3 = ME.addEmployee("John","Paul", 10000);
 		
 		/* get employees */		
-		Employee employee = ME.getEmployee(1);
-		System.out.println(employee.getFirstName());
+//		Employee employee = ME.getEmployee(1);
+//		System.out.println(employee.getFirstName());
 		
 		/* List down all the employees */
 		ME.listEmployees();
@@ -107,8 +107,9 @@ dirty check等，而所有的讀取、更新、插入等動作，則是在Transa
 			List employees = session.createQuery("FROM Employee").list();
 			for(Iterator iterator = employees.iterator();iterator.hasNext();) {
 				Employee employee = (Employee)iterator.next();
-				System.out.print("FirstName: " + employee.getFirstName()); 
-	            System.out.print("   LastName: " + employee.getLastName()); 
+				System.out.print("id: " + employee.getId()); 
+				System.out.print("     FirstName: " + employee.getFirstName()); 
+	            System.out.print("     LastName: " + employee.getLastName()); 
 	            System.out.println("   Salary: " + employee.getSalary()); 
 			}
 			tx.commit();
