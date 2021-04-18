@@ -14,7 +14,9 @@ public class ManageEmployee {
 	
 	public static void main(String[] args) {
 		try {
-			factory = new Configuration().configure().buildSessionFactory();
+			factory = new Configuration()
+							.configure()
+							.buildSessionFactory();
 		} catch (Throwable ex) {
 			System.out.println("Failed to create sessionFactory object." + ex);
 			throw new ExceptionInInitializerError(ex);

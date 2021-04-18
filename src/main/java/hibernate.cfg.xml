@@ -39,8 +39,11 @@
 <!-- 		<property name="hibernate.hbm2ddl.import_files">SQL.employeeMySQL.sql</property> -->
 <!-- 		<property name="hibernate.hbm2ddl.import_files">SQL.employeeDerby.sql</property> -->
 		
-		<!-- List of XML mapping files -->    
+		<!-- 物件與資料庫表格映射文件 -->    
       <mapping resource = "course/hibernate/xml/Employee.hbm.xml"/>
       
+      <!-- course.hibernate.annotation.ManageEmployee的.addAnnotatedClass(course.hibernate.annotation.Employee.class)
+      		可以以下這句取代 -->
+<!--       <mapping class="course.hibernate.annotation.Employee"/>  -->
    </session-factory>
 </hibernate-configuration>

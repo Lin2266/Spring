@@ -3,16 +3,12 @@ package course.hibernate.annotation;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-import org.hibernate.id.enhanced.OptimizerFactory.HiLoOptimizer;
 /*@Entity指定當前類是持久化實體類，不能省略，將此類標記為實體Bean，因此它必須具有無參數構造函數，
   該構造函數至少在受保護範圍內可見。*/
-@Entity	
+@Entity(name = "course.hibernate.annotation.Employee")	
 @Table(name = "employee")/*指定實體類和數據庫表的對應關係（可以省略），省略後：表名=類名*/
 public class Employee {
 	/*每個實體bean將具有一個主鍵，您可以在類上使用@Id註釋對其進行註釋。主鍵可以是單個字段，
@@ -24,7 +20,7 @@ public class Employee {
 	@Column(name = "id")/*指定實體類和數據庫表的對應關係*/
 	private int id;
 	
-	@Column(name = "first_name")
+	@Column(name = "first_name")// 非必要，在欄位名稱與屬性名稱不同時使用
 	private String firstName;
 	
 	@Column(name = "last_name")
@@ -32,7 +28,9 @@ public class Employee {
 	
 	@Column(name = "salary")
 	private int salary;
-
+	
+	// 必須要有一個預設的建構方法
+    // 以使得Hibernate可以使用Constructor.newInstance()建立物件
 	public Employee() {
 		
 	}
